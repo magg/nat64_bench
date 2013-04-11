@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>nat64_bench</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+				<div class="slides">
+				    <section>
+				        <h2>
+				            <br>
+				    <span style="">
+				</span>
+				        </h2>
+				        <h2>
+				            <span style="">
+				                <font color="#EEEEEE" face="League Gothic">Propuesta de Metodología <br>
+				    </font>
+				</span>
+				</h2>
+				<span style="">
+				</span>
+				<h2>
+				    <span style="">
+				<font color="#EEEEEE" face="League Gothic">de Benchmarking <br>
+				    </font>
+				</span>
+				</h2>
+				<span style="">
+				</span>
+				<h2>
+				    <span style="">
+				    <font color="#EEEEEE" face="League Gothic">para aplicaciones NAT64</font>
+				</span>
+				</h2>
+				<p>
+				<br>
+				</p>
+				<h3>
+				    <font face="League Gothic">Miguel González / MCT</font>
+				    <br>
+				</h3>
+
+
+
+
+
+				</section>
+				                <section>
+				                    <h2>
+				    <br>
+				</h2>
+				<h2>Agenda</h2>
+				<ol>
+				    <li>Planteamientos generales</li>
+				    <li>Marco teórico</li>
+				    <li>Propuesta de Benchmarking</li>
+				    <li>Resultados</li>
+				    <li>Conclusiones</li>
+				    <li>Trabajo futuro</li>
+				    <li>  Bibliografía <br>
+				    </li>
+				</ol>
+
+				</section>
+				                    <section>
+				<h2>
+				                    <br>
+				                </h2>
+				                <h2>Antecedentes</h2>
+				<ul>
+				<li>1973: IPv4 es creado dentro de TCP/IP.</li>
+				<li>1995: IETF publica el RFC de IPv6.<br>
+				</li>
+
+				    <li>2011: <b style="color: rgb(255,136,85);">IANA</b> , agota su bloque de IPv4</li>
+				    <li>Proyecciones de RIR's:</li>
+
+				        <ul>
+				        <li>2011:<b> </b>
+				<b style="color: rgb(255,136,85);">APNIC</b>
+				</li>
+				<li>2012: <b style="color: rgb(255,136,85);">RIPE NCC</b>
+				</li>
+				<li>2014 :<b> </b>
+				<b style="color: rgb(255,136,85);">ARIN</b>
+				</li>
+				<li>2014: <b style="color: rgb(255,136,85);">LACNIC</b>
+				</li>
+				<li>2020: <b style="color: rgb(255,136,85);">AFRINIC</b>
+				<br>
+				<br>
+				</li>
+				        </ul>
+
+				</ul>
+				<div>
+				    <br>
+				</div>
+				<p>
+				<br>
+				</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				</section>
+				                <section>
+				                    <h2>
+				                        <br>
+				                    </h2>
+				                    <h2>Antecedentes</h2>
+				<p>
+				La comunicación IPv6 &lt;-&gt; IPv4 es <b style="color: rgb(255,136,85);">imposible
+
+				</b>. Para solucionar esto, surgen  <b style="color: rgb(255,136,85);">los mecanismos de transición de IPv4/IPv6
+				</b>
+				</p> 
+				<br>
+
+
+				<p>Por ejemplo: 
+				<br>
+				</p>
+				<span>4in6</span>
+				<span>6in4</span>
+				<span>6over4</span>
+				<span>6to4</span>
+				<span>DS-Lite</span>
+				<span>IVI</span>
+				<span>ISATAP</span>
+				<span>NAT6</span>
+				<span>NAT64/DNS64</span>
+				<span>Túneles Teredo</span>
+
+
+
+
+
+
+
+
+
+				</section>
+				                    <section>
+				                        <h2>
+				    <br>
+				</h2>
+
+				<h2>antecedentes<br>
+				                    </h2>
+				<p>Los mecanismos de transición se clasifican en: <br>
+				</p>
+				<ul>
+				    <li>
+				                    <div>Traducción</div>
+				                </li>
+				<ul>
+				    <li>
+				                <div>Con estados</div>
+				            </li>
+				    <li>
+				            <div>Sin estados</div>
+				        </li>
+				</ul>
+
+				    <li>
+				        <div>Encapsulamiento</div>
+				    </li>
+				    <li>
+				    <div>Túneles</div>
+				</li>
+				</ul>
+				<p>
+				<br>
+				</p>
+				<p>La <b style="color: rgb(255,136,85);">IETF </b> eligió a la técnica de <b style="color: rgb(255,136,85);"> traducción </b>de encabezados.
+				</p>
+
+
+
+
+				</section>
+				<section>
+				    <h2>
+				    <br>
+				</h2>
+				<h2>
+				    <br>
+				</h2>
+				<h2>Contexto de la investigación <br>
+				</h2>
+				<p>El Tecnológico de Monterrey y NIC.mx deciden iniciar una implementacion&nbsp; de NAT64.</p>
+				<p>Su servidor tuvo el rol de  <b style="color: rgb(255,136,85);">Tester </b> dentro del proyecto <br>
+				</p>
+				</section>
+				    <section>
+				        <h2>
+				    <br>
+				</h2>
+				<h2>Planteamiento del problema<br>
+				</h2>
+
+
+
+				<ul>
+				    <li>Establecer el proceso de pruebas <br>
+				    </li>
+				    <li>Realizar éstas pruebas <br>
+				    </li>
+				    <li>Comparar el desempeño contra otras implementaciones<br>
+				    </li>
+				</ul>
+				<br>
+				<br>
+
+				<p>
+				        <b style="color: rgb(255,136,85);">Pregunta</b> de investigación:
+				</p>
+				<blockquote>
+				¿Existe un modelo estándar para realizar un benchmarking de desempeño para el mecanismo de transición IPv4/IPv6 NAT64 con estados? 
+
+				</blockquote>
+
+
+				</section>
+				        <section>
+				            <h2>
+				    <br>
+				</h2>
+				<h2>
+				            <br>
+				        </h2>
+				        <h2>Definición de variables</h2>
+				<p>
+				<br>
+				</p>
+				<ul>
+				    <li>Variable <b style="color: rgb(255,136,85);"> dependiente</b>: el mecanismo de transición IPv4/IPv6 NAT64 con estados.</li>
+				    <br>
+				        <li>Variable <b style="color: rgb(255,136,85);">independiente</b>: un modelo estándar para realizar un benchmarking de desempeño.<br>
+				    </li>
+				</ul>
+				<p>
+				<br>
+				</p>
+				</section>
+				        <section>
+				            <h2>
+				    <br>
+				</h2>
+				<h2>Objetivos</h2>
+				<blockquote>
+				El objetivo principal de este estudio es determinar si existe un método formal o estándar para realizar un benchmarking de desempeño para NAT64.
+
+				</blockquote>
+
+				<ul>
+				<li>
+				            <div>
+				Si no hay, <b style="color: rgb(255,136,85);">obtener</b> las bases para proponer un modelo.</div>
+				        </li>
+				<li>
+				        <div>
+				<b style="color: rgb(255,136,85);">Ejecutar</b> el modelo con diferentes NAT64 y <b style="color: rgb(255,136,85);">documentar</b> los resultados.&nbsp;</div>
+				    </li>
+				<li>
+				    <div>
+				<b style="color: rgb(255,136,85);">Estudiar</b> cada implementación de NAT64.</div>
+				</li>
+				<li>
+				<div>
+				<b style="color: rgb(255,136,85);">Modificar</b> el NAT64 del Tec para demostrar que el modelo pueda reflejar cambios.<br>
+				</div>
+				</li>
+				</ul>
+
+
+
+
+				</section>
+				<section>
+				    <h2>
+				    <br>
+				</h2>
+				<h2>Justificación</h2>
+				<p align="left">El <b style="color: rgb(255,136,85);">agotamiento </b> de las direcciones IPv4</p>
+				<p align="left">El advenimiento de la <b style="color: rgb(255,136,85);">transición</b> a redes IPv6&nbsp;</p>
+
+				<p align="justify">La <b style="color: rgb(255,136,85);">variedad</b> en el mercado, comercial y de código abierto,&nbsp; lo proyectan como el protocolo defacto.</p>
+				<p align="justify">
+				    <br>
+				</p>
+				<h1>¿Pero cuál usar?<br>
+				</h1>
+
+
+
+
+				</section>
+				    <section>
+				        <h2>
+				            <br>
+				        </h2>
+				        <h2>
+				            <br>
+				        </h2>
+				        <h2>Alcance del estudio<br>
+				        </h2>
+				        <ul>
+				            <li>Se probabron NAT64 open source con estados.<br>
+				            </li>
+				            <li>El escenario de comunicación entre red IPv6 y red IPv4. <br>
+				            </li>
+				            <li>Todos los protocolos soportados por NAT64. <br>&nbsp;(UDP, TCP, ICMP e ICMPv6)</li>
+				        </ul>
+				    </section>
+				    <section>
+				        <h2>
+				            <br>
+				        </h2>
+				        <h2>nat64</h2>
+				        <div>
+				            <ul>
+				                <li>El RFC6146, describe NAT64 con estados.</li>
+				                <li>Protocolos: UDP, TCP e ICMP/ICMPv6.</li>
+				                <li>Traducción 1-N.</li>
+				                <li>Conserva direcciones IPv4.</li>
+				                <li>Usa una pool de direcciones.</li>
+				                <li>Se crea un estado y enlace&nbsp; por cada traducción.</li>
+				            </ul>
+				        </div>
+				    </section>
+				    <section>
+				<h2>Arquitectura nat64<br>
+				</h2>
+
+				<img src="http://i.imgur.com/g3frz1x.png">
+
+				</section>
+				<section>
+				    <img src="http://i.imgur.com/K1t3G9j.png">
+				</section>
+				    <section>
+				        <section>
+				            <h2>
+				                <br>
+				            </h2>
+				            <h2>Marco teorico<br>
+				            </h2>
+				<p>
+				</p>
+				<blockquote>
+				...hechas a algunos mecanismos de transición, entre ellos NAT64, DS-Lite, Dual Stack. Sus pruebas involucran el comportamiento de aplicaciones en términos de consumo de puertos/sesiones y la compatibilidad con las aplicaciones dentro de la red.
+				</blockquote>  (Deng,Wang, Zheng, Gu, &amp; Burgey, 2011) 
+				<br>
+				<p>
+				</p>
+
+				</section>
+				            <section>
+				                <h2>
+				                    <br>
+				                </h2>
+				                <h2>Marco teorico</h2>
+				<p>
+				</p>
+				<blockquote>
+				Se analiza el desempeño de algunos mecanismos de transición, como NAT-PT, NAT64 y un Proxy HTTP.
+				Los paquetes HTTP tenían dos tamaños diferentes, identificados como "pequeño" y "grande". Se pretende medir el Throughput y el RTT.
+				</blockquote> (Yu &amp; Carpenter, 2012)
+				<br>
+				<p>
+				</p>
+
+				</section>
+				                <section>
+				                    <h2>
+				                        <br>
+				                    </h2>
+				                    <h2>Marco teorico</h2>
+				<p>
+
+				</p>
+				                    <blockquote>
+				resultados al comparar el desempeño de IPv6 nativo, NAT64 y NAT44. Utilizaron ambientes controlados y “de producción” para observar el comportamiento de la red. Con la ayuda de estas herramientas se obtuvieron el RTT, la utilización del CPU y utilización de la memoria.
+				</blockquote> (Llanto &amp; Yu, 2012)
+				<br>
+
+				</section>
+				                    <section>
+				                        <h2>
+				                            <br>
+				                        </h2>
+				                        <h2>Marco teorico</h2>
+
+				<blockquote>
+				"...analizar las fallas de las tecnologías de transición un poco más a fondo. Se seleccionó un conjunto representativo de protocolos a nivel aplicación que se usan en Internet. Cuatro de éstas fallaron cuando tuvieron una interoperación con NAT64." (Bajpai et al., 2012)
+				</blockquote>
+
+				<br>
+
+				</section>
+				                    </section>
+				                    <section>
+				                        <br>
+				<br>
+				<br>
+				<h2>Title</h2>
+
+				<ul>
+				    <li>No hay estándar o comparación para NAT64.</li>
+				    <li>Se necesita acotar el dominio de las aplicaciones.</li>
+				    <li>Se usan las métricas:
+				        <ul>
+				        <li>
+				         Throughput
+				        </li>
+				                <li>
+
+				        RTT
+				                </li>
+
+				        <li>
+				        utilización de CPU
+				        </li>
+				        <li>
+				        utilización de Memoria
+				        </li>
+				        </ul>
+
+				    </li>
+				    <li>No miden desempeño de UDP</li>
+				<li>Ambiente de pruebas es esencial<br>
+				</li>
+				</ul>
+
+
+
+				</section>
+				                        <section>
+				                            <h2>Benchmark<br>
+				                            </h2>
+				<div>
+				    <ul>
+				        <li>
+				                            <div align="left">Etapa 1:</div>
+				                        </li>
+				    </ul>
+				</div>
+				<p>
+				<b style="color: rgb(85,136,255);">SSH</b> &nbsp;&nbsp; <b style="color: rgb(255,255,255);">=&gt;</b> &nbsp;&nbsp; <b style="color: rgb(136,255,85);">NTP</b> &nbsp; <b style="color: rgb(255,255,255);">=&gt;</b> &nbsp;&nbsp; <b style="color: rgb(255,85,136);">traceroute</b>
+				</p>
+				<div>
+				    <ul>
+				        <li>Etapa 2:</li>
+				    </ul>
+				</div>
+				<p>
+				<b style="color: rgb(85,136,255);">Throughput HTTP</b> &nbsp;&nbsp; <b style="color: rgb(255,255,255);">=&gt;</b> &nbsp;&nbsp; <b style="color: rgb(136,255,85);">Latencia DNS</b> &nbsp;&nbsp; <b style="color: rgb(255,255,255);">=&gt;</b> &nbsp;&nbsp; <b style="color: rgb(255,85,136);">ICMP RTT</b>
+				</p>
+				<p>
+				<img src="http://i.imgur.com/zP4rI97.png">
+				</p>
+				</section>
+				                        <section>
+				                            <h2>
+				    <br>
+				</h2>
+				<h2>Benchmark a fondo<br>
+				    </h2>
+				<div>
+				    <ul>
+				        <li>Etapa 1</li>
+				    <ul>
+				        <li>Probar uso común de la aplicación.<br>
+				</li>
+				        </ul>
+				        <li>Etapa 2<br>
+
+				                    <ul>
+				        <li>
+				        División de paquetes <b style="color: #f85">grandes</b> (1200) y <b style="color: #f85">pequeños</b> (120)</li>
+				        <li>Incremento de peticiones: 100, 200 y 400</li>
+				        <li>Incremento al número de "usuarios": 10, 20 y 40</li>
+				        <li>Se tomaron <b style="color: #f85">10 muestras</b> por prueba.</li>
+				        <li>Se calculó el nivel de <b style="color: #f85">confianza</b> de la prueba.<br>
+				        </li>
+				        </ul>
+
+				        </li>
+				    </ul>
+				</div>
+
+
+
+
+
+
+				</section>
+				                            <section>
+				                                <h2>Aplicaciones</h2>
+				                                <img src="http://i.imgur.com/ncdRrIw.png">
+				                                <br>
+				                                <img src="http://i.imgur.com/xLiHTyf.png">
+				                                <br>
+				                            </section>
+				                            <section>
+				                                <br>
+				                                <br>
+				                                <br>
+				                                <h2>ambiente de pruebas<br>
+				                                </h2>
+				                                <img src="http://i.imgur.com/4Jm9EoI.png">
+				                            </section>
+				                            <section>
+				                                <h2>
+				                                    <br>
+				    </h2>
+				                                    <p>
+				                                    <br>
+				                                    </p>
+				<h2>Resultados</h2>
+				                                    <img src="http://i.imgur.com/U6GNfVe.png">
+
+				</section>
+				                                    <section>
+				                                        <section>
+				                                            <h2>UDP Benchmarks<br>
+				                                            </h2>
+				                                            <p>
+				                                            <img src="http://i.imgur.com/LH6wbAC.png">
+				                                        </p>
+				                                    </section>
+				                                    <section>
+				                                        <h2>UDP Benchmarks</h2>
+				                                        <p>
+				                                        <img src="http://i.imgur.com/szCrQEl.png">
+				                                    </p>
+				                                </section>
+				                            </section>
+				                            <section>
+				                                <section>
+				                                    <h2>TCP benchmarks<br>
+				                                    </h2>
+				                                    <h2>
+				                                        <img src="http://i.imgur.com/XtoZNC3.png">
+				                                    </h2>
+				                                </section>
+				                                <section>
+				                                    <h2>TCP benchmarks</h2>
+				                                    <p>
+				                                    <img src="http://i.imgur.com/MggXpbU.png">
+				                                </p>
+				                            </section>
+				                        </section>
+				                        <section>
+				                            <section>
+				                                <h2>ICMP Benchmarks<br>
+				                                </h2>
+				                                <h2>
+				                                    <img src="http://i.imgur.com/oZzsGNe.png">
+				                                </h2>
+				                            </section>
+				                            <section>
+				                                <h2>ICMP Benchmarks<br>
+				                                </h2>
+				                                <p>
+				                                <img src="http://i.imgur.com/IMghy1G.png">
+				                            </p>
+				                        </section>
+				                    </section>
+				                    <section>
+				                        <section>
+				                            <h2>
+				                                <br>
+				                            </h2>
+				                            <h2>Monitoreo - mEm<br>
+				                            </h2>
+				                            <img src="http://i.imgur.com/cdUIjtl.png">
+				                        </section>
+				                        <section>
+				                            <h2>
+				                                <br>
+				                            </h2>
+				                            <h2>Monitoreo - CPU</h2>
+				                            <img src="http://i.imgur.com/xpFFiLH.png">
+				                        </section>
+				                    </section>
+				                    <section>
+				                        <h2>
+				                            <br>
+				                        </h2>
+				                        <h2>¿Ganador?<br>
+				                        </h2>
+				                        <img src="http://i.imgur.com/JSFvP3y.png">
+				<p>
+				<br>
+				</p>
+
+
+				</section>
+				                        <section>
+				                            <h2>
+				    <br>
+				</h2>
+				<h2>Conclusiones</h2>
+				<br>
+				                            <ul>
+				                                <li>Se cumplieron todos los objetivos.</li>
+				                                <li>
+				El modelo logra obtener buenos resultados de throughput, latencia y RTT.&nbsp;</li>
+				                                <li>Pero el ambiente controlado limita obtener un resultado más preciso para la utilización de CPU y de memoria.</li>
+				                                <li>El modelo podría ser útil para usuarios como desarrolladores. <br>
+				                                </li>
+				                            </ul>
+				<p>
+				<br>
+				</p>
+				</section>
+				                            <section>
+				                                <br>
+				                                <h2>
+				    <br>
+				</h2>
+				<h2>Trabajo futuro</h2>
+				<p>
+				<br>
+				</p>
+				<ul>
+				    <li>Correr el benchmark en un ambiente de producción.</li>
+				    <ul>
+
+				    <li>
+				        Medir las métricas de manera más exacta.</li>
+				<li>El monitoreo aportaría información más significativa.</li>
+				<li>Incrementar la duración de las pruebas para tener resultados más precisos.<br>
+				</li>
+				</ul>
+
+				</ul>
+
+				</section>
+				                                <section>
+				                                    <h2>
+				                                        <br>
+				                                    </h2>
+				                                    <h2>
+				                                        <br>
+				                                    </h2>
+				                                    <h2>
+				                                        <br>
+				                                    </h2>
+				                                    <h2>¡gracias!<br>
+				                                    </h2>
+				                                </section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
